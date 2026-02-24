@@ -35,7 +35,7 @@
       background: radial-gradient(ellipse at center, transparent 60%, rgba(0,0,0,0.7) 100%);
       pointer-events: none; z-index: 99;
     }
-    .container { max-width: 900px; margin: 0 auto; padding: 2rem 1rem 4rem; }
+    .container { max-width: 960px; margin: 0 auto; padding: 2rem 1rem 4rem; }
     header { text-align: center; margin-bottom: 3rem; }
     .logo-text {
       font-family: 'Press Start 2P', monospace;
@@ -52,12 +52,9 @@
     #status {
       font-family: 'Press Start 2P', monospace; font-size: 0.5rem;
       color: var(--amber); text-align: center; min-height: 1.5rem;
-      margin-bottom: 2rem; letter-spacing: 0.1em;
+      margin-bottom: 1rem; letter-spacing: 0.1em;
     }
-    .last-updated {
-      font-size: 0.55rem; color: var(--green-dim);
-      text-align: center; margin-bottom: 2rem; letter-spacing: 0.1em;
-    }
+    .last-updated { font-size: 0.55rem; color: var(--green-dim); text-align: center; margin-bottom: 2rem; letter-spacing: 0.1em; }
     .error-msg {
       color: var(--red); font-size: 0.55rem; text-align: center;
       font-family: 'Press Start 2P', monospace;
@@ -71,7 +68,7 @@
       display: flex; align-items: center; gap: 0.75rem;
     }
     .section-header::after { content: ''; flex: 1; height: 1px; background: linear-gradient(to right, var(--green-dim), transparent); }
-    .section { margin-bottom: 3.5rem; }
+    .count-badge { font-size: 0.55rem; color: var(--green-dim); margin-left: 0.5rem; font-family: 'Share Tech Mono', monospace; }
     .table-wrap {
       border: 1px solid var(--border); border-radius: 2px; overflow: hidden;
       box-shadow: 0 0 20px rgba(57,255,20,0.05), inset 0 0 40px rgba(0,0,0,0.4);
@@ -89,20 +86,36 @@
     tbody tr:hover { background: rgba(57,255,20,0.05); }
     td { padding: 0.7rem 1rem; color: var(--text); }
     td.right { text-align: right; }
-    .rank { font-family: 'Press Start 2P', monospace; font-size: 0.45rem; color: var(--green-dim); width: 2.5rem; text-align: right; padding-right: 0.5rem; }
+    .rank { font-family: 'Press Start 2P', monospace; font-size: 0.45rem; color: var(--green-dim); width: 3rem; text-align: right; padding-right: 0.75rem; }
     .rank-1 { color: #ffd700; text-shadow: 0 0 8px #ffd700; }
     .rank-2 { color: #c0c0c0; text-shadow: 0 0 6px #c0c0c0; }
     .rank-3 { color: #cd7f32; text-shadow: 0 0 6px #cd7f32; }
     .points-val { color: var(--amber); font-family: 'Press Start 2P', monospace; font-size: 0.5rem; letter-spacing: 0.05em; }
-    .never-badge {
-      display: inline-block; font-family: 'Press Start 2P', monospace; font-size: 0.38rem;
-      color: var(--green); background: rgba(57,255,20,0.1); border: 1px solid var(--green-dim);
-      padding: 0.2rem 0.5rem; border-radius: 2px; letter-spacing: 0.1em;
-      margin-left: 0.5rem; vertical-align: middle;
+    .successor-badge {
+      display: inline-block; font-family: 'Press Start 2P', monospace; font-size: 0.33rem;
+      color: var(--amber); background: rgba(255,183,0,0.08); border: 1px solid rgba(255,183,0,0.35);
+      padding: 0.18rem 0.45rem; border-radius: 2px; letter-spacing: 0.08em;
+      margin-left: 0.6rem; vertical-align: middle; white-space: nowrap;
     }
-    .count-badge { font-size: 0.55rem; color: var(--green-dim); margin-left: 0.5rem; }
+
+    /* Pagination */
+    .pagination {
+      display: flex; align-items: center; justify-content: center;
+      gap: 0.5rem; margin-top: 1.5rem; flex-wrap: wrap;
+    }
+    .page-btn {
+      font-family: 'Press Start 2P', monospace; font-size: 0.4rem;
+      color: var(--green); background: transparent; border: 1px solid var(--green-dim);
+      padding: 0.5rem 0.75rem; cursor: pointer; letter-spacing: 0.1em;
+      transition: all 0.15s; line-height: 1;
+    }
+    .page-btn:hover:not(:disabled) { background: rgba(57,255,20,0.1); border-color: var(--green); box-shadow: 0 0 8px rgba(57,255,20,0.25); }
+    .page-btn.active { background: rgba(57,255,20,0.15); border-color: var(--green); color: var(--green); box-shadow: 0 0 8px rgba(57,255,20,0.3); }
+    .page-btn:disabled { opacity: 0.3; cursor: default; }
+    .page-info { font-family: 'Press Start 2P', monospace; font-size: 0.4rem; color: var(--green-dim); letter-spacing: 0.1em; }
+
     .refresh-btn {
-      display: block; margin: 2rem auto 0;
+      display: block; margin: 2.5rem auto 0;
       font-family: 'Press Start 2P', monospace; font-size: 0.5rem;
       color: var(--green); background: transparent; border: 1px solid var(--green-dim);
       padding: 0.75rem 1.5rem; cursor: pointer; letter-spacing: 0.15em; transition: all 0.2s;
@@ -111,7 +124,11 @@
     .footer { text-align: center; font-size: 0.6rem; color: var(--green-dim); margin-top: 4rem; letter-spacing: 0.1em; }
     .dots::after { content: ''; animation: dots 1.2s steps(4, end) infinite; }
     @keyframes dots { 0%{content:'';} 25%{content:'.';} 50%{content:'..';} 75%{content:'...';} }
-    @media (max-width: 480px) { th, td { padding: 0.6rem 0.5rem; font-size: 0.7rem; } .logo-text { font-size: 0.75rem; } }
+    @media (max-width: 600px) {
+      th, td { padding: 0.6rem 0.5rem; font-size: 0.7rem; }
+      .logo-text { font-size: 0.75rem; }
+      .successor-badge { display: none; }
+    }
   </style>
 </head>
 <body>
@@ -126,25 +143,22 @@
   <div id="error-area"></div>
 
   <div id="content" style="display:none;">
-    <div class="section">
-      <div class="section-header">🏆 EARNED POINTS RANKING <span class="count-badge" id="lb-count"></span></div>
-      <div class="table-wrap">
-        <table>
-          <thead><tr><th class="right">#</th><th>Player</th><th class="right">Earned Points</th></tr></thead>
-          <tbody id="lb-body"></tbody>
-        </table>
-      </div>
+    <div class="section-header">
+      🏆 EARNED POINTS RANKING <span class="count-badge" id="lb-count"></span>
     </div>
-
-    <div class="section">
-      <div class="section-header">⭐ NEVER BEEN PASSED <span class="count-badge" id="nbp-count"></span></div>
-      <div class="table-wrap">
-        <table>
-          <thead><tr><th class="right">#</th><th>Player</th><th class="right">Earned Points</th></tr></thead>
-          <tbody id="nbp-body"></tbody>
-        </table>
-      </div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th class="right">#</th>
+            <th>Player</th>
+            <th class="right">Earned Points</th>
+          </tr>
+        </thead>
+        <tbody id="lb-body"></tbody>
+      </table>
     </div>
+    <div class="pagination" id="pagination"></div>
   </div>
 
   <button class="refresh-btn" onclick="init()">↺ RELOAD DATA</button>
@@ -152,6 +166,10 @@
 </div>
 
 <script>
+  const PAGE_SIZE = 50;
+  let allUsers = [];
+  let currentPage = 1;
+
   function setStatus(msg, loading = true) {
     document.getElementById('status').innerHTML = msg + (loading ? '<span class="dots"></span>' : '');
   }
@@ -162,33 +180,74 @@
   function fmtPts(val) { return Number(val || 0).toLocaleString('en-US', { maximumFractionDigits: 2 }); }
   function esc(s) { return String(s||'—').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
 
-  function buildLeaderboard(users) {
-    const sorted = [...users].sort((a, b) => b.earned_points - a.earned_points);
-    document.getElementById('lb-count').textContent = `(${sorted.length})`;
-    document.getElementById('lb-body').innerHTML = sorted.map((u, i) => {
-      const r = i + 1;
-      return `<tr>
-        <td class="rank${r<=3?' rank-'+r:''}">${r}</td>
-        <td>${esc(u.name)}</td>
-        <td class="right points-val">${fmtPts(u.earned_points)}</td>
-      </tr>`;
-    }).join('');
+  function computeSuccessors(users) {
+    // Mark users who outrank all players who joined after them (higher id)
+    const successorSet = new Set();
+    users.forEach(u => {
+      if (!users.some(o => o.id > u.id && o.earned_points > u.earned_points)) {
+        successorSet.add(u.id);
+      }
+    });
+    return successorSet;
   }
 
-  function buildNeverBeenPassed(users) {
-    const nbp = users
-      .filter(u => !users.some(o => o.id > u.id && o.earned_points > u.earned_points))
-      .sort((a, b) => b.earned_points - a.earned_points);
+  function renderPage(page) {
+    currentPage = page;
+    const totalPages = Math.ceil(allUsers.length / PAGE_SIZE);
+    const start = (page - 1) * PAGE_SIZE;
+    const slice = allUsers.slice(start, start + PAGE_SIZE);
 
-    document.getElementById('nbp-count').textContent = `(${nbp.length})`;
-    document.getElementById('nbp-body').innerHTML = nbp.map((u, i) => {
-      const r = i + 1;
+    document.getElementById('lb-body').innerHTML = slice.map((u, i) => {
+      const r = start + i + 1;
+      const badge = u.outranksSuccessors
+        ? `<span class="successor-badge">⬆ OUTRANKS ALL SUCCESSORS</span>`
+        : '';
       return `<tr>
         <td class="rank${r<=3?' rank-'+r:''}">${r}</td>
-        <td>${esc(u.name)}<span class="never-badge">★ UNMATCHED</span></td>
+        <td>${esc(u.name)}${badge}</td>
         <td class="right points-val">${fmtPts(u.earned_points)}</td>
       </tr>`;
     }).join('');
+
+    renderPagination(page, totalPages);
+    // Scroll table into view smoothly on page change
+    document.getElementById('lb-body').closest('.table-wrap').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  function renderPagination(current, total) {
+    if (total <= 1) { document.getElementById('pagination').innerHTML = ''; return; }
+
+    const container = document.getElementById('pagination');
+    let html = '';
+
+    // Prev button
+    html += `<button class="page-btn" onclick="renderPage(${current-1})" ${current===1?'disabled':''}>◀ PREV</button>`;
+
+    // Page number buttons — show window of pages around current
+    const delta = 2;
+    const pages = [];
+    for (let p = 1; p <= total; p++) {
+      if (p === 1 || p === total || (p >= current - delta && p <= current + delta)) {
+        pages.push(p);
+      }
+    }
+
+    let last = 0;
+    pages.forEach(p => {
+      if (last && p - last > 1) html += `<span class="page-info">…</span>`;
+      html += `<button class="page-btn${p===current?' active':''}" onclick="renderPage(${p})">${p}</button>`;
+      last = p;
+    });
+
+    // Next button
+    html += `<button class="page-btn" onclick="renderPage(${current+1})" ${current===total?'disabled':''}>NEXT ▶</button>`;
+
+    // Page info
+    const start = (current - 1) * PAGE_SIZE + 1;
+    const end = Math.min(current * PAGE_SIZE, allUsers.length);
+    html += `<span class="page-info">${start}–${end} OF ${allUsers.length}</span>`;
+
+    container.innerHTML = html;
   }
 
   async function init() {
@@ -199,17 +258,14 @@
 
     let arrayBuffer;
     try {
-      // Bust cache so GitHub Pages doesn't serve a stale copy
       const resp = await fetch(`data.sqlite?_=${Date.now()}`);
       if (!resp.ok) throw new Error(`HTTP ${resp.status} — has the GitHub Action run yet?`);
       arrayBuffer = await resp.arrayBuffer();
 
-      // Show last-modified time from response headers if available
       const lastMod = resp.headers.get('last-modified');
       if (lastMod) {
-        const d = new Date(lastMod);
         document.getElementById('last-updated').textContent =
-          `last synced: ${d.toLocaleString()}`;
+          `last synced: ${new Date(lastMod).toLocaleString()}`;
       }
     } catch(e) {
       setStatus('FAILED', false);
@@ -231,9 +287,15 @@
       const { columns, values } = result[0];
       const users = values.map(row => Object.fromEntries(columns.map((c, i) => [c, row[i]])));
 
-      buildLeaderboard(users);
-      buildNeverBeenPassed(users);
+      // Sort by earned_points desc, then compute successor status
+      users.sort((a, b) => b.earned_points - a.earned_points);
+      const successorSet = computeSuccessors(users);
+      users.forEach(u => u.outranksSuccessors = successorSet.has(u.id));
+
+      allUsers = users;
+      document.getElementById('lb-count').textContent = `(${users.length})`;
       document.getElementById('content').style.display = 'block';
+      renderPage(1);
       setStatus(`✓ ${users.length} PLAYERS LOADED`, false);
 
     } catch(e) {
