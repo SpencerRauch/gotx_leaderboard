@@ -124,10 +124,22 @@
     .footer { text-align: center; font-size: 0.6rem; color: var(--green-dim); margin-top: 4rem; letter-spacing: 0.1em; }
     .dots::after { content: ''; animation: dots 1.2s steps(4, end) infinite; }
     @keyframes dots { 0%{content:'';} 25%{content:'.';} 50%{content:'..';} 75%{content:'...';} }
+    .successor-badge .badge-text { display: inline; }
     @media (max-width: 600px) {
       th, td { padding: 0.6rem 0.5rem; font-size: 0.7rem; }
       .logo-text { font-size: 0.75rem; }
-      .successor-badge { display: none; }
+      .successor-badge .badge-text { display: none; }
+      .successor-badge { padding: 0.18rem 0.35rem; }
+    }
+
+    /* Legend */
+    .legend {
+      display: flex; align-items: center; gap: 0.6rem;
+      margin-bottom: 1.25rem; flex-wrap: wrap;
+    }
+    .legend-item {
+      display: flex; align-items: center; gap: 0.4rem;
+      font-size: 0.6rem; color: var(--green-dim); letter-spacing: 0.05em;
     }
   </style>
 </head>
@@ -145,6 +157,12 @@
   <div id="content" style="display:none;">
     <div class="section-header">
       🏆 EARNED POINTS RANKING <span class="count-badge" id="lb-count"></span>
+    </div>
+    <div class="legend">
+      <div class="legend-item">
+        <span class="successor-badge" style="margin:0; vertical-align:middle;">⭐ <span class="badge-text">OUTRANKS ALL SUCCESSORS</span></span>
+        <span>— currently ahead of every player who joined after them</span>
+      </div>
     </div>
     <div class="table-wrap">
       <table>
@@ -200,7 +218,7 @@
     document.getElementById('lb-body').innerHTML = slice.map((u, i) => {
       const r = start + i + 1;
       const badge = u.outranksSuccessors
-        ? `<span class="successor-badge">⬆ OUTRANKS ALL SUCCESSORS</span>`
+        ? `<span class="successor-badge">⭐ <span class="badge-text">OUTRANKS ALL SUCCESSORS</span></span>`
         : '';
       return `<tr>
         <td class="rank${r<=3?' rank-'+r:''}">${r}</td>
