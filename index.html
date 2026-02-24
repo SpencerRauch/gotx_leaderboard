@@ -14,508 +14,235 @@
       --amber: #ffb700;
       --red: #ff3131;
       --bg: #050a05;
-      --panel: #0a120a;
       --border: #1d3a1d;
       --text: #c8e6c8;
       --scanline: rgba(0,0,0,0.18);
     }
-
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
     html { height: 100%; }
-
     body {
       font-family: 'Share Tech Mono', monospace;
-      background: var(--bg);
-      color: var(--text);
-      min-height: 100vh;
-      position: relative;
-      overflow-x: hidden;
+      background: var(--bg); color: var(--text);
+      min-height: 100vh; overflow-x: hidden;
     }
-
-    /* CRT scanlines overlay */
     body::before {
-      content: '';
-      position: fixed;
-      inset: 0;
-      background: repeating-linear-gradient(
-        0deg,
-        var(--scanline) 0px,
-        var(--scanline) 1px,
-        transparent 1px,
-        transparent 3px
-      );
-      pointer-events: none;
-      z-index: 100;
+      content: ''; position: fixed; inset: 0;
+      background: repeating-linear-gradient(0deg, var(--scanline) 0px, var(--scanline) 1px, transparent 1px, transparent 3px);
+      pointer-events: none; z-index: 100;
     }
-
-    /* CRT vignette */
     body::after {
-      content: '';
-      position: fixed;
-      inset: 0;
+      content: ''; position: fixed; inset: 0;
       background: radial-gradient(ellipse at center, transparent 60%, rgba(0,0,0,0.7) 100%);
-      pointer-events: none;
-      z-index: 99;
+      pointer-events: none; z-index: 99;
     }
-
-    .container {
-      max-width: 900px;
-      margin: 0 auto;
-      padding: 2rem 1rem 4rem;
-    }
-
-    header {
-      text-align: center;
-      margin-bottom: 3rem;
-      position: relative;
-    }
-
+    .container { max-width: 900px; margin: 0 auto; padding: 2rem 1rem 4rem; }
+    header { text-align: center; margin-bottom: 3rem; }
     .logo-text {
       font-family: 'Press Start 2P', monospace;
       font-size: clamp(1rem, 4vw, 1.6rem);
       color: var(--green);
-      text-shadow:
-        0 0 10px var(--green),
-        0 0 30px var(--green-dim),
-        0 0 60px rgba(57,255,20,0.2);
-      line-height: 1.6;
-      letter-spacing: 0.05em;
+      text-shadow: 0 0 10px var(--green), 0 0 30px var(--green-dim), 0 0 60px rgba(57,255,20,0.2);
+      line-height: 1.6; letter-spacing: 0.05em;
       animation: flicker 8s infinite;
     }
-
-    .logo-sub {
-      font-size: 0.65rem;
-      color: var(--amber);
-      margin-top: 0.75rem;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-    }
-
+    .logo-sub { font-size: 0.65rem; color: var(--amber); margin-top: 0.75rem; letter-spacing: 0.2em; text-transform: uppercase; }
     @keyframes flicker {
-      0%,95%,100% { opacity: 1; }
-      96% { opacity: 0.85; }
-      97% { opacity: 1; }
-      98% { opacity: 0.9; }
-      99% { opacity: 1; }
+      0%,95%,100% { opacity: 1; } 96% { opacity: 0.85; } 97% { opacity: 1; } 98% { opacity: 0.9; } 99% { opacity: 1; }
     }
-
-    .divider {
-      border: none;
-      border-top: 1px solid var(--green-dim);
-      margin: 1.5rem 0;
-      box-shadow: 0 0 8px var(--green-dim);
-    }
-
-    /* Status bar */
     #status {
-      font-family: 'Press Start 2P', monospace;
-      font-size: 0.5rem;
-      color: var(--amber);
-      text-align: center;
-      min-height: 1.5rem;
-      margin-bottom: 2rem;
-      animation: blink-cursor 1s step-end infinite;
-      letter-spacing: 0.1em;
+      font-family: 'Press Start 2P', monospace; font-size: 0.5rem;
+      color: var(--amber); text-align: center; min-height: 1.5rem;
+      margin-bottom: 2rem; letter-spacing: 0.1em;
     }
-
-    @keyframes blink-cursor {
-      50% { opacity: 0.6; }
+    .last-updated {
+      font-size: 0.55rem; color: var(--green-dim);
+      text-align: center; margin-bottom: 2rem; letter-spacing: 0.1em;
     }
-
     .error-msg {
-      color: var(--red);
-      font-size: 0.55rem;
-      text-align: center;
+      color: var(--red); font-size: 0.55rem; text-align: center;
       font-family: 'Press Start 2P', monospace;
-      background: rgba(255,49,49,0.08);
-      border: 1px solid rgba(255,49,49,0.3);
-      padding: 1rem;
-      border-radius: 2px;
-      margin-bottom: 1rem;
+      background: rgba(255,49,49,0.08); border: 1px solid rgba(255,49,49,0.3);
+      padding: 1rem; border-radius: 2px; margin-bottom: 1rem; line-height: 1.8;
     }
-
-    /* Section headers */
     .section-header {
-      font-family: 'Press Start 2P', monospace;
-      font-size: 0.6rem;
-      color: var(--green);
-      text-shadow: 0 0 10px var(--green);
-      letter-spacing: 0.15em;
-      margin-bottom: 1rem;
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
+      font-family: 'Press Start 2P', monospace; font-size: 0.6rem;
+      color: var(--green); text-shadow: 0 0 10px var(--green);
+      letter-spacing: 0.15em; margin-bottom: 1rem;
+      display: flex; align-items: center; gap: 0.75rem;
     }
-
-    .section-header::after {
-      content: '';
-      flex: 1;
-      height: 1px;
-      background: linear-gradient(to right, var(--green-dim), transparent);
-    }
-
-    .section {
-      margin-bottom: 3.5rem;
-    }
-
-    /* Tables */
+    .section-header::after { content: ''; flex: 1; height: 1px; background: linear-gradient(to right, var(--green-dim), transparent); }
+    .section { margin-bottom: 3.5rem; }
     .table-wrap {
-      border: 1px solid var(--border);
-      border-radius: 2px;
-      overflow: hidden;
-      box-shadow:
-        0 0 20px rgba(57,255,20,0.05),
-        inset 0 0 40px rgba(0,0,0,0.4);
+      border: 1px solid var(--border); border-radius: 2px; overflow: hidden;
+      box-shadow: 0 0 20px rgba(57,255,20,0.05), inset 0 0 40px rgba(0,0,0,0.4);
     }
-
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      font-size: 0.78rem;
-    }
-
-    thead {
-      background: rgba(57,255,20,0.07);
-      border-bottom: 1px solid var(--border);
-    }
-
+    table { width: 100%; border-collapse: collapse; font-size: 0.78rem; }
+    thead { background: rgba(57,255,20,0.07); border-bottom: 1px solid var(--border); }
     th {
-      font-family: 'Press Start 2P', monospace;
-      font-size: 0.45rem;
-      color: var(--green);
-      text-align: left;
-      padding: 0.9rem 1rem;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
+      font-family: 'Press Start 2P', monospace; font-size: 0.45rem;
+      color: var(--green); text-align: left; padding: 0.9rem 1rem;
+      letter-spacing: 0.15em; text-transform: uppercase;
     }
-
     th.right { text-align: right; }
-
-    tbody tr {
-      border-bottom: 1px solid rgba(29,58,29,0.5);
-      transition: background 0.15s;
-    }
-
+    tbody tr { border-bottom: 1px solid rgba(29,58,29,0.5); transition: background 0.15s; }
     tbody tr:last-child { border-bottom: none; }
-
-    tbody tr:hover {
-      background: rgba(57,255,20,0.05);
-    }
-
-    td {
-      padding: 0.7rem 1rem;
-      color: var(--text);
-    }
-
+    tbody tr:hover { background: rgba(57,255,20,0.05); }
+    td { padding: 0.7rem 1rem; color: var(--text); }
     td.right { text-align: right; }
-
-    /* Rank column */
-    .rank {
-      font-family: 'Press Start 2P', monospace;
-      font-size: 0.45rem;
-      color: var(--green-dim);
-      width: 2.5rem;
-      text-align: right;
-      padding-right: 0.5rem;
-    }
-
-    .rank-1  { color: #ffd700; text-shadow: 0 0 8px #ffd700; }
-    .rank-2  { color: #c0c0c0; text-shadow: 0 0 6px #c0c0c0; }
-    .rank-3  { color: #cd7f32; text-shadow: 0 0 6px #cd7f32; }
-
-    .points-val {
-      color: var(--amber);
-      font-family: 'Press Start 2P', monospace;
-      font-size: 0.5rem;
-      letter-spacing: 0.05em;
-    }
-
+    .rank { font-family: 'Press Start 2P', monospace; font-size: 0.45rem; color: var(--green-dim); width: 2.5rem; text-align: right; padding-right: 0.5rem; }
+    .rank-1 { color: #ffd700; text-shadow: 0 0 8px #ffd700; }
+    .rank-2 { color: #c0c0c0; text-shadow: 0 0 6px #c0c0c0; }
+    .rank-3 { color: #cd7f32; text-shadow: 0 0 6px #cd7f32; }
+    .points-val { color: var(--amber); font-family: 'Press Start 2P', monospace; font-size: 0.5rem; letter-spacing: 0.05em; }
     .never-badge {
-      display: inline-block;
-      font-family: 'Press Start 2P', monospace;
-      font-size: 0.38rem;
-      color: var(--green);
-      background: rgba(57,255,20,0.1);
-      border: 1px solid var(--green-dim);
-      padding: 0.2rem 0.5rem;
-      border-radius: 2px;
-      letter-spacing: 0.1em;
-      margin-left: 0.5rem;
-      vertical-align: middle;
+      display: inline-block; font-family: 'Press Start 2P', monospace; font-size: 0.38rem;
+      color: var(--green); background: rgba(57,255,20,0.1); border: 1px solid var(--green-dim);
+      padding: 0.2rem 0.5rem; border-radius: 2px; letter-spacing: 0.1em;
+      margin-left: 0.5rem; vertical-align: middle;
     }
-
-    .count-badge {
-      font-size: 0.55rem;
-      color: var(--green-dim);
-      margin-left: 0.5rem;
-    }
-
+    .count-badge { font-size: 0.55rem; color: var(--green-dim); margin-left: 0.5rem; }
     .refresh-btn {
-      display: block;
-      margin: 2rem auto 0;
-      font-family: 'Press Start 2P', monospace;
-      font-size: 0.5rem;
-      color: var(--green);
-      background: transparent;
-      border: 1px solid var(--green-dim);
-      padding: 0.75rem 1.5rem;
-      cursor: pointer;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      transition: all 0.2s;
+      display: block; margin: 2rem auto 0;
+      font-family: 'Press Start 2P', monospace; font-size: 0.5rem;
+      color: var(--green); background: transparent; border: 1px solid var(--green-dim);
+      padding: 0.75rem 1.5rem; cursor: pointer; letter-spacing: 0.15em; transition: all 0.2s;
     }
-
-    .refresh-btn:hover {
-      background: rgba(57,255,20,0.1);
-      border-color: var(--green);
-      box-shadow: 0 0 12px rgba(57,255,20,0.3);
-    }
-
-    .footer {
-      text-align: center;
-      font-size: 0.6rem;
-      color: var(--green-dim);
-      margin-top: 4rem;
-      letter-spacing: 0.1em;
-    }
-
-    /* Loading dots */
-    .dots::after {
-      content: '';
-      animation: dots 1.2s steps(4, end) infinite;
-    }
-    @keyframes dots {
-      0%   { content: ''; }
-      25%  { content: '.'; }
-      50%  { content: '..'; }
-      75%  { content: '...'; }
-      100% { content: ''; }
-    }
-
-    @media (max-width: 480px) {
-      th, td { padding: 0.6rem 0.5rem; font-size: 0.7rem; }
-      .logo-text { font-size: 0.75rem; }
-    }
+    .refresh-btn:hover { background: rgba(57,255,20,0.1); border-color: var(--green); box-shadow: 0 0 12px rgba(57,255,20,0.3); }
+    .footer { text-align: center; font-size: 0.6rem; color: var(--green-dim); margin-top: 4rem; letter-spacing: 0.1em; }
+    .dots::after { content: ''; animation: dots 1.2s steps(4, end) infinite; }
+    @keyframes dots { 0%{content:'';} 25%{content:'.';} 50%{content:'..';} 75%{content:'...';} }
+    @media (max-width: 480px) { th, td { padding: 0.6rem 0.5rem; font-size: 0.7rem; } .logo-text { font-size: 0.75rem; } }
   </style>
 </head>
 <body>
-  <div class="container">
-    <header>
-      <div class="logo-text">RETROHANDHELDS<br>LEADERBOARD</div>
-      <div class="logo-sub">randomizer.retrohandhelds.gg</div>
-    </header>
+<div class="container">
+  <header>
+    <div class="logo-text">RETROHANDHELDS<br>LEADERBOARD</div>
+    <div class="logo-sub">randomizer.retrohandhelds.gg</div>
+  </header>
 
-    <div id="status">INITIALIZING<span class="dots"></span></div>
-    <div id="error-area"></div>
+  <div id="status">LOADING<span class="dots"></span></div>
+  <div id="last-updated" class="last-updated"></div>
+  <div id="error-area"></div>
 
-    <div id="content" style="display:none;">
-      <div class="section">
-        <div class="section-header">
-          🏆 EARNED POINTS RANKING <span class="count-badge" id="lb-count"></span>
-        </div>
-        <div class="table-wrap">
-          <table id="lb-table">
-            <thead>
-              <tr>
-                <th class="right">#</th>
-                <th>Player</th>
-                <th class="right">Earned Points</th>
-              </tr>
-            </thead>
-            <tbody id="lb-body"></tbody>
-          </table>
-        </div>
-      </div>
-
-      <div class="section">
-        <div class="section-header">
-          ⭐ NEVER BEEN PASSED <span class="count-badge" id="nbp-count"></span>
-        </div>
-        <div class="table-wrap">
-          <table id="nbp-table">
-            <thead>
-              <tr>
-                <th class="right">#</th>
-                <th>Player</th>
-                <th class="right">Earned Points</th>
-              </tr>
-            </thead>
-            <tbody id="nbp-body"></tbody>
-          </table>
-        </div>
+  <div id="content" style="display:none;">
+    <div class="section">
+      <div class="section-header">🏆 EARNED POINTS RANKING <span class="count-badge" id="lb-count"></span></div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th class="right">#</th><th>Player</th><th class="right">Earned Points</th></tr></thead>
+          <tbody id="lb-body"></tbody>
+        </table>
       </div>
     </div>
 
-    <button class="refresh-btn" onclick="init()">↺ RELOAD DATA</button>
-
-    <div class="footer">DATA FETCHED LIVE FROM RETROHANDHELDS.GG</div>
+    <div class="section">
+      <div class="section-header">⭐ NEVER BEEN PASSED <span class="count-badge" id="nbp-count"></span></div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th class="right">#</th><th>Player</th><th class="right">Earned Points</th></tr></thead>
+          <tbody id="nbp-body"></tbody>
+        </table>
+      </div>
+    </div>
   </div>
 
-  <script>
-    const BASE_URL = 'https://randomizer.retrohandhelds.gg';
-    const ASSETS_URL = `${BASE_URL}/assets/`;
+  <button class="refresh-btn" onclick="init()">↺ RELOAD DATA</button>
+  <div class="footer">SYNCED VIA GITHUB ACTIONS · DATA FROM RETROHANDHELDS.GG</div>
+</div>
 
-    function setStatus(msg) {
-      document.getElementById('status').innerHTML = msg + '<span class="dots"></span>';
-    }
+<script>
+  function setStatus(msg, loading = true) {
+    document.getElementById('status').innerHTML = msg + (loading ? '<span class="dots"></span>' : '');
+  }
+  function showError(msg) {
+    document.getElementById('error-area').innerHTML = `<div class="error-msg">⚠ ${msg}</div>`;
+  }
+  function clearError() { document.getElementById('error-area').innerHTML = ''; }
+  function fmtPts(val) { return Number(val || 0).toLocaleString('en-US', { maximumFractionDigits: 2 }); }
+  function esc(s) { return String(s||'—').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
 
-    function showError(msg) {
-      document.getElementById('error-area').innerHTML =
-        `<div class="error-msg">⚠ ${msg}</div>`;
-    }
+  function buildLeaderboard(users) {
+    const sorted = [...users].sort((a, b) => b.earned_points - a.earned_points);
+    document.getElementById('lb-count').textContent = `(${sorted.length})`;
+    document.getElementById('lb-body').innerHTML = sorted.map((u, i) => {
+      const r = i + 1;
+      return `<tr>
+        <td class="rank${r<=3?' rank-'+r:''}">${r}</td>
+        <td>${esc(u.name)}</td>
+        <td class="right points-val">${fmtPts(u.earned_points)}</td>
+      </tr>`;
+    }).join('');
+  }
 
-    function clearError() {
-      document.getElementById('error-area').innerHTML = '';
-    }
+  function buildNeverBeenPassed(users) {
+    const nbp = users
+      .filter(u => !users.some(o => o.id > u.id && o.earned_points > u.earned_points))
+      .sort((a, b) => b.earned_points - a.earned_points);
 
-    async function discoverSqliteUrl() {
-      // Method A: try directory listing
-      try {
-        const resp = await fetch(ASSETS_URL);
-        const html = await resp.text();
-        const match = html.match(/[A-Za-z0-9_-]+\.sqlite/);
-        if (match) return `${ASSETS_URL}${match[0]}`;
-      } catch(e) {}
+    document.getElementById('nbp-count').textContent = `(${nbp.length})`;
+    document.getElementById('nbp-body').innerHTML = nbp.map((u, i) => {
+      const r = i + 1;
+      return `<tr>
+        <td class="rank${r<=3?' rank-'+r:''}">${r}</td>
+        <td>${esc(u.name)}<span class="never-badge">★ UNMATCHED</span></td>
+        <td class="right points-val">${fmtPts(u.earned_points)}</td>
+      </tr>`;
+    }).join('');
+  }
 
-      // Method B: parse JS bundle
-      const pageResp = await fetch(BASE_URL);
-      const pageHtml = await pageResp.text();
-      const scriptMatch = pageHtml.match(/src="([^"]+\.js)"/);
-      if (scriptMatch) {
-        const jsUrl = scriptMatch[1].startsWith('http')
-          ? scriptMatch[1]
-          : `${BASE_URL}/${scriptMatch[1].replace(/^\//, '')}`;
-        const jsResp = await fetch(jsUrl);
-        const jsText = await jsResp.text();
-        const sqliteMatch = jsText.match(/[A-Za-z0-9_-]+\.sqlite/);
-        if (sqliteMatch) return `${ASSETS_URL}${sqliteMatch[0]}`;
+  async function init() {
+    clearError();
+    document.getElementById('content').style.display = 'none';
+    document.getElementById('last-updated').textContent = '';
+    setStatus('LOADING DATABASE');
+
+    let arrayBuffer;
+    try {
+      // Bust cache so GitHub Pages doesn't serve a stale copy
+      const resp = await fetch(`data.sqlite?_=${Date.now()}`);
+      if (!resp.ok) throw new Error(`HTTP ${resp.status} — has the GitHub Action run yet?`);
+      arrayBuffer = await resp.arrayBuffer();
+
+      // Show last-modified time from response headers if available
+      const lastMod = resp.headers.get('last-modified');
+      if (lastMod) {
+        const d = new Date(lastMod);
+        document.getElementById('last-updated').textContent =
+          `last synced: ${d.toLocaleString()}`;
       }
-
-      throw new Error('Could not locate SQLite file. The site structure may have changed.');
+    } catch(e) {
+      setStatus('FAILED', false);
+      showError(`Could not load data.sqlite: ${e.message}`);
+      return;
     }
 
-    function buildLeaderboard(users) {
-      // Sort by earned_points descending
-      const sorted = [...users].sort((a, b) => b.earned_points - a.earned_points);
-      const tbody = document.getElementById('lb-body');
-      tbody.innerHTML = '';
-      document.getElementById('lb-count').textContent = `(${sorted.length})`;
-
-      sorted.forEach((u, i) => {
-        const rank = i + 1;
-        const rankClass = rank <= 3 ? `rank-${rank}` : '';
-        const tr = document.createElement('tr');
-        tr.innerHTML = `
-          <td class="rank ${rankClass}">${rank}</td>
-          <td>${escHtml(u.name || '—')}</td>
-          <td class="right points-val">${fmtPts(u.earned_points)}</td>
-        `;
-        tbody.appendChild(tr);
+    setStatus('PARSING DATA');
+    try {
+      const SQL = await initSqlJs({
+        locateFile: f => `https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.10.2/${f}`
       });
+      const db = new SQL.Database(new Uint8Array(arrayBuffer));
+      const result = db.exec(`SELECT id, name, earned_points FROM "public.users" ORDER BY id`);
+      db.close();
+
+      if (!result.length) throw new Error('No rows found in public.users');
+
+      const { columns, values } = result[0];
+      const users = values.map(row => Object.fromEntries(columns.map((c, i) => [c, row[i]])));
+
+      buildLeaderboard(users);
+      buildNeverBeenPassed(users);
+      document.getElementById('content').style.display = 'block';
+      setStatus(`✓ ${users.length} PLAYERS LOADED`, false);
+
+    } catch(e) {
+      setStatus('FAILED', false);
+      showError(`Database error: ${e.message}`);
     }
+  }
 
-    function buildNeverBeenPassed(users) {
-      // For each user, check if any user with a HIGHER id has MORE earned_points
-      // If no such user exists → never been passed
-      const nbp = users.filter(u => {
-        return !users.some(other => other.id > u.id && other.earned_points > u.earned_points);
-      });
-
-      // Sort by earned_points descending for display
-      nbp.sort((a, b) => b.earned_points - a.earned_points);
-
-      const tbody = document.getElementById('nbp-body');
-      tbody.innerHTML = '';
-      document.getElementById('nbp-count').textContent = `(${nbp.length})`;
-
-      nbp.forEach((u, i) => {
-        const rank = i + 1;
-        const rankClass = rank <= 3 ? `rank-${rank}` : '';
-        const tr = document.createElement('tr');
-        tr.innerHTML = `
-          <td class="rank ${rankClass}">${rank}</td>
-          <td>${escHtml(u.name || '—')} <span class="never-badge">★ UNMATCHED</span></td>
-          <td class="right points-val">${fmtPts(u.earned_points)}</td>
-        `;
-        tbody.appendChild(tr);
-      });
-    }
-
-    function fmtPts(val) {
-      if (val == null) return '0';
-      return Number(val).toLocaleString('en-US', { maximumFractionDigits: 2 });
-    }
-
-    function escHtml(str) {
-      return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
-    }
-
-    async function init() {
-      clearError();
-      document.getElementById('content').style.display = 'none';
-      setStatus('LOCATING DATABASE');
-
-      let sqliteUrl;
-      try {
-        sqliteUrl = await discoverSqliteUrl();
-      } catch(e) {
-        setStatus('FAILED');
-        showError(`Database discovery failed: ${e.message}`);
-        return;
-      }
-
-      setStatus('DOWNLOADING DATABASE');
-
-      let arrayBuffer;
-      try {
-        const resp = await fetch(sqliteUrl);
-        if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
-        arrayBuffer = await resp.arrayBuffer();
-      } catch(e) {
-        setStatus('FAILED');
-        showError(`Download failed: ${e.message}. Check CORS headers on the server.`);
-        return;
-      }
-
-      setStatus('PARSING DATA');
-
-      try {
-        const SQL = await initSqlJs({
-          locateFile: file => `https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.10.2/${file}`
-        });
-
-        const db = new SQL.Database(new Uint8Array(arrayBuffer));
-
-        const result = db.exec(
-          `SELECT id, name, earned_points FROM "public.users" ORDER BY id`
-        );
-
-        if (!result.length || !result[0].values.length) {
-          throw new Error('No user records found in database.');
-        }
-
-        const cols = result[0].columns;
-        const users = result[0].values.map(row => {
-          const obj = {};
-          cols.forEach((c, i) => obj[c] = row[i]);
-          return obj;
-        });
-
-        db.close();
-
-        buildLeaderboard(users);
-        buildNeverBeenPassed(users);
-
-        document.getElementById('content').style.display = 'block';
-        setStatus(`LOADED ${users.length} PLAYERS`);
-      } catch(e) {
-        setStatus('FAILED');
-        showError(`Query error: ${e.message}`);
-      }
-    }
-
-    init();
-  </script>
+  init();
+</script>
 </body>
 </html>
